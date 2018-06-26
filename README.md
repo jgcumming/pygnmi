@@ -16,7 +16,10 @@ $ python pygnmi.py --help
 ## Usage Example:
 
 ```
-$ python pygnmi.py  --server 192.168.33.2:57400 --username grpc --password Nokia4gnmi --service subscribe --cert CAcert.pem --ciphers AES128 /state/port[port-id=1/1/1]/ethernet/statistics/out-utilization
+$ python pygnmi.py  --server 192.168.33.2:57400 --username grpc --password Nokia4gnmi \
+                    --service subscribe --cert CAcert.pem \
+                    --ciphers AES128 /state/port[port-id=1/1/1]/ethernet/statistics/out-utilization
+
 17/12/04 16:02:43,160 Sending SubscribeRequest
 subscribe {
   subscription {
