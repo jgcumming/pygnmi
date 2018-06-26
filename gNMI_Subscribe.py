@@ -69,7 +69,31 @@ import grpc_support
 
 ##############################################################################
 
-def subscribe(channel, options,log):
+def gen_request( opt, log ):
+    import gnmi_pb2
+    mysubs = []
+    for path in opt.xpaths:
+        mypath = grpc_support.path_from_string(path)
+        mysub = gnmi_pb2.Subscription(path=mypath, mode=opt.submode, suppress_redundant=opt.suppress, sample_interval=opt.interval*1000000000, heartbeat_interval=opt.heartbeat)
+        mysubs.append(mysub)
+
+    if opt.prefix:
+        myprefix = path_from_string(opt.prefix)
+    else:
+        myprefix = None
+
+    if opt.qos:
+        myqos = gnmi_pb2.QOSMarking(marking=opt.qos)
+    else:
+        myqos = None
+
+    mysblist = gnmi_pb2.SubscriptionList(prefix=myprefix, mode=opt.mode, allow_aggregation=opt.aggregate, encoding=opt.encoding, subscription=mysubs, use_aliases=opt.use_alias, qos=myqos)
+    mysubreq = gnmi_pb2.SubscribeRequest( subscribe=mysblist )
+
+    log.info('Sending SubscribeRequest\n'+str(mysubreq))
+    yield mysubreq
+
+def subscribe(channel, options, log, prog):
     try:
         import grpc
         import gnmi_pb2
@@ -80,7 +104,7 @@ def subscribe(channel, options,log):
     log.debug("Create gNMI stub")
     stub = gnmi_pb2.gNMIStub(channel)
 
-    req_iterator = grpc_support.gen_request( options, log )
+    req_iterator = gen_request( options, log )
     metadata = [('username',options.username), ('password', options.password)]
 
     msgs = 0
@@ -121,6 +145,7 @@ def subscribe(channel, options,log):
 
     if (msgs>1):
         log.info("%d update messages received", msgs)
+        return msgs
 
 # EOF
 

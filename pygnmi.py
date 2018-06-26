@@ -123,7 +123,7 @@ if __name__ == '__main__':
     if options.service == "capabilities":
         try:
             import gNMI_Capabilities
-            gNMI_Capabilities.get_capabilities(channel, options, log)
+            output = gNMI_Capabilities.get_capabilities(channel, options, log)
         except Exception as err:
             log.error(str(err))
             quit()
@@ -131,9 +131,19 @@ if __name__ == '__main__':
     if options.service == "subscribe":
         try:
             import gNMI_Subscribe
-            gNMI_Subscribe.subscribe(channel, options,log)
+            output = gNMI_Subscribe.subscribe(channel, options, log, prog)
         except Exception as err:
             log.error(str(err))
             quit()
+
+    if options.service == "get":
+        try:
+            import gNMI_Get
+            output = gNMI_Get.get(channel, options, log, prog)
+        except Exception as err:
+            log.error(str(err))
+            quit()
+
+    print output
 
 

@@ -10,5 +10,5 @@ def get_capabilities(channel, options, log):
   responses = gnmi_pb2.CapabilityResponse()
   log.info("Obtaining capabilities from "+options.server)
   responses = stub.Capabilities(gnmi_pb2.CapabilityRequest(),5,metadata=metadata)
-  print responses
+  return responses
 
