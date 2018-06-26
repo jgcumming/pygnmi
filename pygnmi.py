@@ -88,7 +88,7 @@ def get_options():
 
 
     group = parser.add_argument_group()
-    group.add_argument('--service', default="capabilities", help='[capabilities, get, set, subscribe]')
+    group.add_argument('--service', default='capabilities', help='[capabilities, get, set, subscribe]')
 
     group = parser.add_argument_group()
     group.add_argument('--interval', default=10, type=int, help='sample interval (default: 10s)')

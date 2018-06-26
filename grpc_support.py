@@ -86,7 +86,7 @@ def create_channel(options,log):
             return channel
 
     else:
-        log.info("Create insecure Channel... Username: "+options.username+" Password: "+options.password)
+        log.info("Create insecure channel to "+options.server+" Username: "+options.username+" Password: "+options.password)
         channel = grpc.insecure_channel(options.server)
         return channel
 
