@@ -120,12 +120,20 @@ if __name__ == '__main__':
 
     channel = grpc_support.create_channel(options,log)
 
+    if options.service == "capabilities":
+        try:
+            import gNMI_Capabilities
+            gNMI_Capabilities.get_capabilities(channel, options, log)
+        except Exception as err:
+            log.error(str(err))
+            quit()
+
     if options.service == "subscribe":
-      try:
-          import gNMI_Subscribe
-          gNMI_Subscribe.subscribe(channel, options,log)
-      except:
-          log.error(str(err))
-          quit()
+        try:
+            import gNMI_Subscribe
+            gNMI_Subscribe.subscribe(channel, options,log)
+        except Exception as err:
+            log.error(str(err))
+            quit()
 
 
