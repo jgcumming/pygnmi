@@ -88,7 +88,7 @@ def get_options():
 
 
     group = parser.add_argument_group()
-    group.add_argument('--service', default="capabilities", help='[capabilities, get, set, subscribe]')
+    group.add_argument('--service', default='capabilities', help='[capabilities, get, set, subscribe]')
 
     group = parser.add_argument_group()
     group.add_argument('--interval', default=10, type=int, help='sample interval (default: 10s)')
@@ -120,12 +120,30 @@ if __name__ == '__main__':
 
     channel = grpc_support.create_channel(options,log)
 
+    if options.service == "capabilities":
+        try:
+            import gNMI_Capabilities
+            output = gNMI_Capabilities.get_capabilities(channel, options, log)
+        except Exception as err:
+            log.error(str(err))
+            quit()
+
     if options.service == "subscribe":
-      try:
-          import gNMI_Subscribe
-          gNMI_Subscribe.subscribe(channel, options,log)
-      except:
-          log.error(str(err))
-          quit()
+        try:
+            import gNMI_Subscribe
+            output = gNMI_Subscribe.subscribe(channel, options, log, prog)
+        except Exception as err:
+            log.error(str(err))
+            quit()
+
+    if options.service == "get":
+        try:
+            import gNMI_Get
+            output = gNMI_Get.get(channel, options, log, prog)
+        except Exception as err:
+            log.error(str(err))
+            quit()
+
+    print output
 
 

@@ -86,7 +86,7 @@ def create_channel(options,log):
             return channel
 
     else:
-        log.info("Create insecure Channel... Username: "+options.username+" Password: "+options.password)
+        log.info("Create insecure channel to "+options.server+" Username: "+options.username+" Password: "+options.password)
         channel = grpc.insecure_channel(options.server)
         return channel
 
@@ -116,29 +116,6 @@ def path_from_string(path='/'):
 
     return gnmi_pb2.Path(elem=mypath)
 
-
-def gen_request( opt,log ):
-    mysubs = []
-    for path in opt.xpaths:
-        mypath = path_from_string(path)
-        mysub = gnmi_pb2.Subscription(path=mypath, mode=opt.submode, suppress_redundant=opt.suppress, sample_interval=opt.interval*1000000000, heartbeat_interval=opt.heartbeat)
-        mysubs.append(mysub)
-
-    if opt.prefix:
-        myprefix = path_from_string(opt.prefix)
-    else:
-        myprefix = None
-
-    if opt.qos:
-        myqos = gnmi_pb2.QOSMarking(marking=opt.qos)
-    else:
-        myqos = None
-
-    mysblist = gnmi_pb2.SubscriptionList(prefix=myprefix, mode=opt.mode, allow_aggregation=opt.aggregate, encoding=opt.encoding, subscription=mysubs, use_aliases=opt.use_alias, qos=myqos)
-    mysubreq = gnmi_pb2.SubscribeRequest( subscribe=mysblist )
-
-    log.info('Sending SubscribeRequest\n'+str(mysubreq))
-    yield mysubreq
 
 ##############################################################################
 
