@@ -16,7 +16,30 @@ $ python pygnmi.py --help
 
 ## The default service is 'capabilities'
 
-## Usage Example:
+## Usage Example (CAPABILITIES):
+
+```
+$ pygnmi.py --service capabilities --username grpc --password nokia123 \
+            --server 192.168.5.10:57400
+
+18/07/02 08:21:51,712 Create insecure channel to 192.168.5.10:57400 Username: grpc Password: nokia123
+18/07/02 08:21:51,714 Obtaining capabilities from 192.168.5.10:57400
+supported_models {
+  name: "nokia-conf"
+  organization: "Nokia"
+  version: "16.0.R1"
+}
+supported_models {
+  name: "nokia-state"
+  organization: "Nokia"
+  version: "16.0.R1"
+}
+supported_encodings: JSON
+gNMI_version: "0.4.0"
+
+```
+
+## Usage Example (SUBSCRIBE):
 
 ```
 $ python pygnmi.py  --server 192.168.33.2:57400 --username grpc --password Nokia4gnmi \
