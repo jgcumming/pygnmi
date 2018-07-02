@@ -131,8 +131,7 @@ def subscribe(channel, options, log, prog):
                 upds += len(response.update.update)
                 if not options.stats:
                     if options.logstash:
-                        import json
-                        print json.JSONEncoder().encode(str(response))
+                        log.info(response.update.update)
                     else:
                         log.info('Update received\n'+str(response))
             else:
