@@ -130,7 +130,9 @@ def subscribe(channel, options, log, prog):
                 msgs += 1
                 upds += len(response.update.update)
                 if not options.stats:
-                    log.info('Update received\n'+str(response))
+                    #log.info('Update received\n'+str(response))
+                    import json
+                    print json.dumps(str(response).replace("\n","").replace(" ",""), sort_keys=True, separators=(',',':') ,indent=0)
             else:
                 log.error('Unknown response received:\n'+str(response))
 
