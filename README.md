@@ -4,14 +4,17 @@ Python tools for gNMI
 ## Installation
 Python tools for gNMI can be used with Python 2.7 and Python3.
 Please follow gRPC Installation Guide from:
-https://github.com/grpc/grpc
+https://grpc.io/docs/quickstart/python
 
 ```
 $ pip install --upgrade pip
 $ pip install grpcio
+$ pip install grpcio-tools googleapis-common-protos
 $ curl -O https://raw.githubusercontent.com/openconfig/gnmi/master/proto/gnmi/gnmi_pb2.py
 $ python pygnmi.py --help
 ```
+
+## The default service is 'capabilities'
 
 ## Usage Example:
 
