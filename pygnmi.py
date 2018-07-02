@@ -85,6 +85,7 @@ def get_options():
     group = parser.add_argument_group()
     group.add_argument('--logfile', metavar='<filename>', type=argparse.FileType('wb', 0), default='-', help='Specify the logfile (default: <stdout>)')
     group.add_argument('--stats', action='store_true', help='collect stats')
+    group.add_argument('--logstash', action='store_true', help='Change subscription output format to be supported by logstash')
 
 
     group = parser.add_argument_group()
