@@ -144,7 +144,8 @@ if __name__ == '__main__':
             import gNMI_Get
             output = gNMI_Get.get(channel, options, log, prog)
             if options.output == "xpath":
-              output = grpc_support.xpath_output(output)
+                for n in output.notification:
+                    output = grpc_support.xpath_output(n)
         except Exception as err:
             log.error(str(err))
             quit()

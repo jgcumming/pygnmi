@@ -128,14 +128,18 @@ def string_from_path(path):
 
 def xpath_output(output):
     newOutput = []
-    for n in output.notification:
-        for u in n.update:
+    for u in output.update:
+        if output.prefix.elem:
             tmpOutput = ""
-            tmpOutput += string_from_path(u.path)
-            tmpOutput += ": "
-            tmpOutput += u.val.json_val
+            tmpOutput += string_from_path(output.prefix)
             newOutput.append(tmpOutput)
-        output = "\n".join(newOutput)
+        tmpOutput = ""
+        tmpOutput += string_from_path(u.path)
+        tmpOutput += ": "
+        tmpOutput += u.val.json_val
+        newOutput.append(tmpOutput)
+        newOutput.append("\n")
+    output = "".join(newOutput)
     return output
 
 

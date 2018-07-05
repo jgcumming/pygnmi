@@ -132,6 +132,8 @@ def subscribe(channel, options, log, prog):
                 if not options.stats:
                     if options.logstash:
                         log.info(response.update.update)
+                    if options.output == "xpath":
+                        log.info(grpc_support.xpath_output(response.update))
                     else:
                         log.info('Update received\n'+str(response))
             else:
