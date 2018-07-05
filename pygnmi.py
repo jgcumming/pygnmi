@@ -86,6 +86,7 @@ def get_options():
     group.add_argument('--logfile', metavar='<filename>', type=argparse.FileType('wb', 0), default='-', help='Specify the logfile (default: <stdout>)')
     group.add_argument('--stats', action='store_true', help='collect stats')
     group.add_argument('--logstash', action='store_true', help='Change subscription output format to be supported by logstash')
+    group.add_argument('--output', default='raw', help='Output format [raw, xpath]')
 
 
     group = parser.add_argument_group()
@@ -141,6 +142,17 @@ if __name__ == '__main__':
         try:
             import gNMI_Get
             output = gNMI_Get.get(channel, options, log, prog)
+            if options.output == "xpath":
+              newOutput = []
+              for n in output.notification:
+                for u in n.update:
+                  tmpOutput = ""
+                  tmpOutput += grpc_support.string_from_path(u.path)
+                  tmpOutput += ": "
+                  tmpOutput += u.val.json_val
+                  newOutput.append(tmpOutput)
+              output = "\n".join(newOutput)
+            
         except Exception as err:
             log.error(str(err))
             quit()

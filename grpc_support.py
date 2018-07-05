@@ -116,6 +116,16 @@ def path_from_string(path='/'):
 
     return gnmi_pb2.Path(elem=mypath)
 
+def string_from_path(path):
+    pathString = []
+    for e in path.elem:
+      if e:
+        pathString.append(e.name)
+        for eKey in e.key:
+          pathString.append("["+eKey+"="+"\""+e.key[eKey]+"\""+"]")
+    returnString = "/"+"/".join(pathString)
+    return returnString
+
 
 ##############################################################################
 
