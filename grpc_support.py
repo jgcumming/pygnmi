@@ -126,6 +126,18 @@ def string_from_path(path):
     returnString = "/"+"/".join(pathString)
     return returnString
 
+def xpath_output(output):
+    newOutput = []
+    for n in output.notification:
+        for u in n.update:
+            tmpOutput = ""
+            tmpOutput += string_from_path(u.path)
+            tmpOutput += ": "
+            tmpOutput += u.val.json_val
+            newOutput.append(tmpOutput)
+        output = "\n".join(newOutput)
+    return output
+
 
 ##############################################################################
 

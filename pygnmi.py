@@ -115,6 +115,7 @@ def get_options():
     
     return(options,prog)
 
+
 if __name__ == '__main__':
     (options,prog) = get_options()
 
@@ -143,16 +144,7 @@ if __name__ == '__main__':
             import gNMI_Get
             output = gNMI_Get.get(channel, options, log, prog)
             if options.output == "xpath":
-              newOutput = []
-              for n in output.notification:
-                for u in n.update:
-                  tmpOutput = ""
-                  tmpOutput += grpc_support.string_from_path(u.path)
-                  tmpOutput += ": "
-                  tmpOutput += u.val.json_val
-                  newOutput.append(tmpOutput)
-              output = "\n".join(newOutput)
-            
+              output = grpc_support.xpath_output(output)
         except Exception as err:
             log.error(str(err))
             quit()
